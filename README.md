@@ -1,0 +1,2 @@
+# Wikipedia-Rainbow-Text
+yes
