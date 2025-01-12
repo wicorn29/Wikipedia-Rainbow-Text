@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas | Student Client</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico" type="image/x-icon">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20%;
+        }
+        button, label {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .warning-text {
+            color: red;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        iframe {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <h1>IP Address of boykisserforum.duckdns.org</h1>
+    <p id="ip-address">Fetching IP...</p>
+    <button id="visit-btn" style="display:none;">VM Client for SMS CBOOKS</button>
+
+    <!-- Discrete Mode Button -->
+    <button id="discrete-mode-btn">Discrete Mode</button>
+
+    <!-- Iframe that loads the URL -->
+    <iframe id="discrete-iframe" src="" title="Discrete Mode"></iframe>
+
+    <p class="warning-text">
+        If you encounter an "insecure website" warning in Chrome, you can bypass it by typing <strong>thisisunsafe</strong> anywhere on the page. This will allow you to proceed to the site. Be cautious when using this method.
+    </p>
+
+    <script>
+    // Oh hi there. You are in the source code! I like you.
+    
+        const domain = 'boykisserforum.duckdns.org'; // yes I know, sus. But at least the school won't think twice about that community using http requests lol
+        const apiUrl = `https://dns.google/resolve?name=${domain}&type=A`;
+        let ipAddress = ''; // To store the IP address
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const button = document.getElementById('visit-btn');
+            const discreteModeBtn = document.getElementById('discrete-mode-btn');
+            const iframe = document.getElementById('discrete-iframe');
+
+            // Always show the button
+            button.style.display = 'inline-block';
+
+            // Discrete Mode button click event
+            discreteModeBtn.addEventListener('click', () => {
+                // If IP is fetched, load it; else, fallback to default URL
+                const urlToLoad = ipAddress ? `https://${ipAddress}:8006` : 'https://boykisserforum.duckdns.org:8006';
+                iframe.src = urlToLoad;
+                iframe.style.display = 'block'; // Show the iframe in discrete mode (full screen)
+            });
+        });
+
+        function fetchAndRedirect() {
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    ipAddress = data.Answer[0].data; // Get the fetched IP address
+                    const url = `https://${ipAddress}:8006`;
+                    document.getElementById('ip-address').innerText = url;
+
+                    const button = document.getElementById('visit-btn');
+                    button.onclick = () => window.location.href = url;
+                })
+                .catch(error => {
+                    console.error('Error fetching IP:', error);
+                    // If IP fetch fails, show the default URL
+                    document.getElementById('ip-address').innerText = 'Unable to fetch IP address. Using default URL.';
+                });
+        }
+
+        // Fetch the IP address when the page loads
+        fetchAndRedirect();
+    </script>
+</body>
+</html>
