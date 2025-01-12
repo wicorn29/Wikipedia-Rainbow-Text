@@ -1,2 +1,2 @@
-# Wikipedia-Rainbow-Text
-yes
+# Proxmox chromeos client
+sssh don't tell the school
